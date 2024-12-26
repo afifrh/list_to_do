@@ -12,8 +12,11 @@ class DatabaseMethod {
   }
 
   //READ the data
-  Future<Stream<QuerySnapshot>> getUserInfo() async {
-    return await FirebaseFirestore.instance.collection("User").snapshots();
+  Future<Stream<QuerySnapshot>> getUserInfo(String userId) async {
+    return await FirebaseFirestore.instance
+        .collection("User")
+        .where('currentUserId', isEqualTo: userId)
+        .snapshots();
   }
 
   //UPDATE the data

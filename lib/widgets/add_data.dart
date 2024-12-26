@@ -5,7 +5,9 @@ import 'package:todo/services/database.dart';
 import 'package:todo/widgets/uihelper.dart';
 
 class AddData extends StatefulWidget {
-  const AddData({super.key});
+  const AddData({super.key, required this.userId});
+
+  final String userId;
 
   @override
   State<AddData> createState() => _AddDataState();
@@ -58,10 +60,12 @@ class _AddDataState extends State<AddData> {
           const SizedBox(height: 20),
           Uihelper.CustomButton(() async {
             String id = randomAlphaNumeric(10);
+            String currentUserId = widget.userId;
             Map<String, dynamic> userInfo = {
               "desc": descController.text.toString(),
               "title": titleController.text.toString(),
               "Id": id,
+              "currentUserId": currentUserId,
             };
             await DatabaseMethod().addUserDetails(userInfo, id).then((value) {
               Fluttertoast.showToast(
